@@ -60,7 +60,7 @@ def process_income_file(input_file, output_file):
 
     transactions_df.to_csv(output_file, index=False)
 
-input_file = '../Assets/dataset/mock_financial_data_4.csv'  
+input_file = '../Assets/dataset/Customer.csv'  
 output_file = '../Assets/dataset/transaction_history.csv' 
 
 process_income_file(input_file, output_file)
