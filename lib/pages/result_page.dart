@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 
 class ResultPage extends StatefulWidget{
+  const ResultPage({super.key});
+
   @override
   _ResultPageState createState() => _ResultPageState();
 }
@@ -40,7 +42,7 @@ class _ResultPageState extends State<ResultPage> {
         backgroundColor: Colors.white,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white
         ),
         child: Stack(
