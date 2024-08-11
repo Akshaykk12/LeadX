@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:leadx/pages/Home_page.dart';
 import 'package:leadx/pages/result_page.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 
 class IncomeDetails extends StatefulWidget{
-  const IncomeDetails({super.key});
 
   @override
   _IncomeDetailsState createState() => _IncomeDetailsState();
@@ -179,12 +177,12 @@ class _IncomeDetailsState extends State<IncomeDetails>{
                                     backgroundColor: Color(0xff00DDA3)
                                 ),
                                 onPressed: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context)=>const HomePage()));
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/resultPage'
+                                  );
                                 },
-                                child: const Text('Predict',style: TextStyle(color: Colors.white),)
+                                child: Text('Predict',style: TextStyle(color: Colors.white),)
                             ),
                           )
 
