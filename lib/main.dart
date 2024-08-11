@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:leadx/pages/Home_page.dart';
 import 'package:leadx/pages/Personal_Details.dart';
+import 'package:leadx/pages/category_page.dart';
 import 'package:leadx/pages/income_details.dart';
 import 'package:leadx/pages/result_page.dart';
 
@@ -15,11 +17,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PersonalDetails(),
+      home: const PersonalDetails(),
       routes: {
-        '/personalDetails': (context) => PersonalDetails(),
-        '/incomeDetails': (context) => IncomeDetails(),
-        '/resultPage': (context) => ResultPage()
+        '/personalDetails': (context) => const PersonalDetails(),
+        '/incomeDetails': (context) => const IncomeDetails(),
+        '/resultPage': (context) => const ResultPage(),
+        '/catPage' : (context) => const CategoryPage(),
+        '/home_page': (context) => const HomePage()
       },
     );
   }
