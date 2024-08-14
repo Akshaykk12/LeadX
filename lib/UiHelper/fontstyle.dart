@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 
 TextStyle heading2({
   Color textColor = Colors.white
@@ -16,7 +18,7 @@ TextStyle heading2({
 }
 
 TextStyle heading1({
-  Color textColor = Colors.white
+  Color textColor = Colors.black
 }){
   return TextStyle(
     fontFamily: 'JockeyOne',
@@ -39,12 +41,15 @@ TextStyle heading3({
 }
 
 TextStyle subHeading({
-  Color textColor = Colors.black
+  Color textColor = Colors.black,
+  double textSize = 24,
+  FontWeight textWeight = FontWeight.w600
 }){
   return TextStyle(
     fontFamily: 'Inter',
     color: textColor,
-    fontSize: 24,
+    fontSize: textSize,
+    fontWeight: textWeight,
     letterSpacing: 1.5
   );
 }

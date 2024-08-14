@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadx/pages/Home_page.dart';
+import 'package:leadx/pages/Login_page.dart';
 import 'package:leadx/pages/Personal_Details.dart';
 import 'package:leadx/pages/category_page.dart';
 import 'package:leadx/pages/income_details.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PersonalDetails(),
+      home: const LoginPage(),
       routes: {
         '/personalDetails': (context) => const PersonalDetails(),
         '/incomeDetails': (context) => const IncomeDetails(),

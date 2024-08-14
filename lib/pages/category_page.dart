@@ -9,9 +9,6 @@ class CategoryPage extends StatefulWidget{
 }
 
 class _CategoryPageState extends State<CategoryPage>{
-  @override
-
-  List titles = ['Loans','Mutual Funds','Investments','Fixed Deposits','Insurance','Policies'];
 
   var logos = [
     'Assets/Images/Logos/loan_logo.png',
@@ -21,6 +18,8 @@ class _CategoryPageState extends State<CategoryPage>{
     'Assets/Images/Logos/ins_logo.png',
     'Assets/Images/Logos/policy_logo.png',
   ];
+
+  @override
 
   Widget build(BuildContext context) {
 
@@ -32,73 +31,174 @@ class _CategoryPageState extends State<CategoryPage>{
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('LeadX',style: heading1(textColor: Color(0xff33404F)),),
+        title: Text('LeadX',style: heading1(textColor: const Color(0xff33404F)),),
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start ,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Categories', style: subHeading(textColor: Color(0xff33404F)),
+              padding: const EdgeInsets.only(top: 10,left: 18,bottom: 10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(height: screenwidth * 0.05,),
+                  Text('Categories', style: subHeading(
+                    textSize: 18,
+                    textColor: Color(0xff33404F)
+                  ),),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0,left: 5),
+                    child: Container(
+                      height: 10,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        color: Color(0xff00E7B1),
+                        shape: BoxShape.circle
+                      ),
                     ),
-                    TextSpan(
-                      text: '.', style: TextStyle(color: Color(0xff00E7B1), fontWeight: FontWeight.bold, fontSize: 55)
-                    )
-                  ]
-                ),
-              ),
+                  )
+                ],
+              )
             ),
 
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0
-                  ),
-                  itemCount: titles.length,
-                  itemBuilder: (context, index){
-                    return Container(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0,bottom: 15.0),
+                    child: Container(
+                      height: screenheight * 0.25,
+                      width: screenwidth * 0.38,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: Colors.grey.shade300)
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-              
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(titles[index],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Color(0xff000000)
-                              ),
-                            ),
-                          ),
-              
-                          SizedBox(height: 5,),
-              
-                          Expanded(
-                            child: Image.asset(
-                              logos[index],
-                              fit: BoxFit.cover,
-                            ),
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.18),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
                           )
-              
                         ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[0]),fit: BoxFit.cover
+                        )
                       ),
-                    );
-                  }
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0,top: 20.0,bottom: 15.0),
+                    child: Container(
+                      height: screenheight * 0.19,
+                      width: screenwidth * 0.38,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.18),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[1]),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0,top: 15.0),
+                    child: Container(
+                      height: screenheight * 0.19,
+                      width: screenwidth * 0.38,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.18),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[2]),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0,bottom: 15.0,top: 15.0),
+                    child: Container(
+                      height: screenheight * 0.19,
+                      width: screenwidth * 0.38,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.19),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[3]),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 15.0, bottom: 15.0),
+                    child: Container(
+                      height: screenheight * 0.25,
+                      width: screenwidth * 0.38,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.18),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[4]),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 15.0,bottom: 15.0),
+                    child: Container(
+                      height: screenheight * 0.18,
+                      width: screenwidth * 0.38,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(17),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.18),
+                            spreadRadius: 6,
+                            blurRadius: 7.5
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(logos[5]),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          )
 
           ],
         ),

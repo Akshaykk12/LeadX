@@ -28,6 +28,9 @@ class BottomNavbar extends StatelessWidget{
             GButton(
               icon: Icons.leaderboard_sharp,
               text: 'Top Leads',
+              iconActiveColor: Colors.white,
+              iconColor: Colors.grey,
+              
             ),
 
             GButton(
