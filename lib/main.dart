@@ -16,17 +16,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
-      routes: {
-        '/personalDetails': (context) => const PersonalDetails(),
-        '/incomeDetails': (context) => const IncomeDetails(),
-        '/resultPage': (context) => const ResultPage(),
-        '/catPage' : (context) => const CategoryPage(),
-        '/home_page': (context) => const HomePage()
-      },
+      home: PersonalDetails(),
     );
   }
 }
-

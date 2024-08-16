@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
+import 'package:leadx/UiHelper/Form_util.dart';
+import 'package:leadx/models/personal_details_model.dart';
 import 'package:leadx/pages/income_details.dart';
+import 'package:leadx/utils/text_controllers.dart';
 
-class PersonalDetails extends StatefulWidget{
+class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
 
   @override
@@ -10,266 +13,179 @@ class PersonalDetails extends StatefulWidget{
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
-
-  TextEditingController name = TextEditingController();
-  TextEditingController age = TextEditingController();
-  var occupation;
-  var marital_status;
-  var gender;
+  String? occupation;
+  String? maritalStatus;
+  String? gender;
 
   @override
-
   Widget build(BuildContext context) {
-
     double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
 
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('Assets/Images/BackGround/Background.png',),
-          fit: BoxFit.cover
-        )
-      ),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                'Assets/Images/BackGround/Background.png',
+              ),
+              fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('LeadX',style: heading1(),),
+          title: Text(
+            'LeadX',
+            style: heading1(textColor: Colors.white),
+          ),
           automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-
-        body: Stack(
+        body:Column(
           children: [
-            Positioned(
-              top: screenheight * 0.15,
-              left: screenwidth * 0.04,
+            Padding(
+              padding: const EdgeInsets.only(top: 130, right: 100),
               child: Text('Personal',style: heading2(),),
             ),
-
-            Positioned(
-              top: screenheight * 0.22,
-              left: screenwidth * 0.04,
-              child: RichText(
-                  text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Details',style: heading3()
-                        ),
-
-                        TextSpan(
-                            text: '.',style: TextStyle(color: Color(0xff00E7B1),fontWeight: FontWeight.bold,fontSize: 55)
-                        )
-                      ]
+            Padding(
+              padding: const EdgeInsets.only(left: 18, ),
+              child: Row(
+                children: [
+                  Text('Details',style: heading3(),),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25),
+                    child: Container(
+                      height: 10,
+                      width: 10,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xff00DDA3)
+                      ),
+                    ),
                   )
+                ],
               ),
             ),
 
-            Positioned(
-              top: screenheight * 0.35,
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: Container(
-                  height: screenheight * 0.7,
-                  width: screenwidth ,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
-                    color: Color(0xffFFFFFF),
-                  ),
-                  child: Center(
-                    child: Container(
-                      width: screenwidth * 0.8,
-                      child: Column(
-                        children: [
-                          SizedBox(height: screenheight * 0.08,),
+            SizedBox(height: screenheight * 0.05,),
 
-                          TextField(
-                            controller: name,
-                            keyboardType: TextInputType.text,
-                            cursorColor: Color(0xff2CB696),
-                            decoration: InputDecoration(
-                                label: Text('Name'),
-                                labelStyle: TextStyle(color: Color(0xff33404F)),
-                                floatingLabelStyle: TextStyle(color: Color(0xff2CB696)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff2CB696),
-                                        width: 1.5
-                                    )
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                      color: Color(0xff33404F),
-                                    )
-                                )
-                            ),
+            Expanded(
+              child: Container(
+                width: screenwidth ,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(35), topLeft: Radius.circular(35))
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height:screenheight * 0.06,),
 
-                          ),
+                      textField(Controller: TextControllers.name, labelName: 'Name'),
 
-                          SizedBox(height: screenheight * 0.02,),
+                      SizedBox(height: screenheight*0.03,),
 
-                          TextField(
-                            controller: age,
-                            keyboardType: TextInputType.number,
-                            cursorColor: Color(0xff2CB696),
-                            decoration: InputDecoration(
-                                label: Text('Age'),
-                                labelStyle: TextStyle(color: Color(0xff33404F)),
-                                floatingLabelStyle: TextStyle(color: Color(0xff2CB696)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff2CB696),
-                                        width: 1.5
-                                    )
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff33404F)
-                                    )
-                                )
-                            ),
-                          ),
+                      textField(Controller: TextControllers.age, labelName: 'Age',keyboardType: TextInputType.number,),
 
-                          SizedBox(height: screenheight * 0.02,),
+                      SizedBox(height: screenheight*0.03,),
 
-                          DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                label: Text('Occupation'),
-                                labelStyle: TextStyle(color: Color(0xff33404F)),
-                                floatingLabelStyle: TextStyle(color: Color(0xff2CB696)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff2CB696),
-                                        width: 1.25
-                                    )
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff33404F)
-                                    )
-                                )
-                            ),
-                            value: occupation,
-                            items: ['Student', 'Job', 'Business', 'Retired'].map(
-                                    (option)=>DropdownMenuItem(
-                                  value: option,
-                                  child: Text(option),
-                                )
-                            )
-                                .toList(),
-                            onChanged: (value){
-                              setState(() {
-                                occupation = value;
-                              });
-                            },
-                          ),
+                      textField(Controller: TextControllers.aadhar, labelName: 'Aadhaar No.',keyboardType: TextInputType.number,),
 
-                          SizedBox(height: screenheight * 0.02,),
+                      SizedBox(height: screenheight*0.03,),
 
-                          DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                label: Text('Gender'),
-                                labelStyle: TextStyle(color: Color(0xff33404F)),
-                                floatingLabelStyle: TextStyle(color: Color(0xff2CB696)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff2CB696),
-                                        width: 1.25
-                                    )
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff33404F)
-                                    )
-                                )
-                            ),
-                            value: gender,
-                            items: ['Male','Female','Others'].map(
-                                    (option)=>DropdownMenuItem(
-                                  value: option,
-                                  child: Text(option),
-                                )
-                            ).toList(),
-                            onChanged: (value){
-                              setState(() {
-                                gender = value;
-                              });
-                            },
-                          ),
-
-                          SizedBox(height: screenheight * 0.02,),
-
-                          DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                labelStyle: TextStyle(color: Color(0xff33404F)),
-                                floatingLabelStyle: TextStyle(color: Color(0xff2CB696)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff2CB696),
-                                        width: 1.5
-                                    )
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: BorderSide(
-                                        color: Color(0xff33404F)
-                                    )
-                                ),
-                                label: Text('Marital Status')
-                            ),
-                            value: marital_status,
-                            items: ['Single', 'Married', 'Divorced'].map(
-                                    (option) => DropdownMenuItem(
-                                  value: option,
-                                  child: Text(option),
-                                )
-                            ).toList(),
-                            onChanged: (value){
-                              setState(() {
-                                marital_status = value;
-                              });
-                            },
-                          ),
-
-                          SizedBox(height: screenheight * 0.04,),
-
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xff00DDA3)
-                                ),
-                                onPressed: (){
-                                  Navigator.pushNamed(
-                                      context,
-                                    '/incomeDetails'
-                                      );
-                                },
-                                child: Text('Next >',style: TextStyle(color: Colors.white),)
-                            ),
-                          )
-
-                        ],
+                      DropDown(labelName: 'Occupation', value: occupation,
+                          items: const ['Student', 'Job', 'Business', 'Retired'],
+                          onchanged: (value){
+                            setState(() {
+                              occupation = value;
+                            });
+                          }
                       ),
-                    ),
+
+                      SizedBox(height: screenheight*0.03,),
+
+                      DropDown(labelName: 'Gender', value: gender,
+                          items: const ['Male', 'Female', 'Others'],
+                          onchanged: (value){
+                            setState(() {
+                              gender = value;
+                            });
+                          }
+                      ),
+
+                      SizedBox(height: screenheight*0.03,),
+
+                      DropDown(labelName: 'Marital Status', value: maritalStatus,
+                          items: const ['Single', 'Married', 'Divorced'],
+                          onchanged: (value){
+                            setState(() {
+                              maritalStatus = value;
+                            });
+                          }
+                      ),
+
+                      SizedBox(height: screenheight*0.01,),
+
+                      switchTile(value: TextControllers.child, title: 'Do You Have Kids?',
+                          onchanged: (bool value){
+                            setState(() {
+                              TextControllers.child = value;
+                            });
+                          }),
+                      switchTile(value: TextControllers.home, title: 'Do You Own A House?',
+                          onchanged: (bool value){
+                            setState(() {
+                              TextControllers.home = value;
+                            });
+                          }),
+                      switchTile(value: TextControllers.car, title: 'Do You Own A Car?',
+                          onchanged: (bool value){
+                            setState(() {
+                              TextControllers.car = value;
+                            });
+                          }),
+                      SizedBox(height: screenheight * 0.02,),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25, bottom: 25),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: GestureDetector(
+                            onTap: (){
+                              PersonalDetailsModel personalDetails = PersonalDetailsModel(
+                                  name: TextControllers.name.text,
+                                  age: int.parse(TextControllers.age.text),
+                                  aadhar: int.parse(TextControllers.aadhar.text),
+                                  occupation: occupation!,
+                                  gender: gender!,
+                                  maritalStatus: maritalStatus!,
+                                  child: TextControllers.child,
+                                  home: TextControllers.home,
+                                  car: TextControllers.car
+                              );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => IncomeDetails(personalDetails: personalDetails)
+                                ));
+                            },
+                            child: Container(
+                              height: screenheight * 0.05,
+                              width: screenwidth * 0.25,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff00DDA3),
+                                  borderRadius: BorderRadius.circular(17)
+                              ),
+                              child: const Center(child: Text('Next',style: TextStyle(color: Colors.white),)),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
             )
-
           ],
-        ),
+        )
       ),
     );
   }

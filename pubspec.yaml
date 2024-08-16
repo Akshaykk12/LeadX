@@ -35,7 +35,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  google_nav_bar: ^5.0.6
+  google_nav_bar: 
+  tflite_flutter: ^0.10.4
+  
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +71,8 @@ flutter:
     - Assets/Images/Posters/Mutual_funds/
     - Assets/Images/Posters/Policies/
     - Assets/Images/Logos/
+    - Assets/model/model2.tflite
+    - Assets/Images/Posters/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
