@@ -6,7 +6,7 @@ class DataModel {
   String gender;
   String maritalStatus;
   int income;
-  String expenses;
+  int expenses;
   int creditScore;
   bool child;
   bool home;
@@ -38,7 +38,7 @@ class DataModel {
       gender: map['gender'] as String,
       maritalStatus: map['maritalStatus'] as String,
       income: map['income'] as int,
-      expenses: map['expenses'] as String,
+      expenses: map['expenses'] as int,
       creditScore: map['creditScore'] as int,
       child: map['child'] as bool,
       home: map['home'] as bool,

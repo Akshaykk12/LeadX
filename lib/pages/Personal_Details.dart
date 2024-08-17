@@ -164,8 +164,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                   car: TextControllers.car
                               );
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => IncomeDetails(personalDetails: personalDetails)
-                                ));
+                                  MaterialPageRoute(builder: (context) => IncomeDetails(personalDetails: personalDetails)
+                                  ));
                             },
                             child: Container(
                               height: screenheight * 0.05,

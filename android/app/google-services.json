@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "130815558845",
+    "project_id": "leadx-c94c7",
+    "storage_bucket": "leadx-c94c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130815558845:android:8acbb7efa37d65bc7423d4",
+        "android_client_info": {
+          "package_name": "com.example.leadx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPSnOwGtIzoDqpK49soK3lFVwl3pPc9nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

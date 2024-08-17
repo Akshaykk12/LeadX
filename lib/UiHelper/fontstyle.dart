@@ -6,11 +6,12 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 TextStyle heading2({
-  Color textColor = Colors.white
+  Color textColor = Colors.white,
+  double textSize = 45
 }){
   return TextStyle(
     fontFamily: 'Monda',
-    fontSize: 45,
+    fontSize: textSize,
     color: textColor,
     letterSpacing: 3.3,
     fontWeight: FontWeight.w700
@@ -18,23 +19,25 @@ TextStyle heading2({
 }
 
 TextStyle heading1({
-  Color textColor = Colors.black
+  Color textColor = Colors.black,
+  double textSize = 35
 }){
   return TextStyle(
     fontFamily: 'JockeyOne',
-    fontSize: 35,
+    fontSize: textSize,
     color: textColor,
     letterSpacing: 4.0,
   );
 }
 
 TextStyle heading3({
-  Color textColor = Colors.white
+  Color textColor = Colors.white,
+  double textSize = 35
 }){
   return TextStyle(
     fontFamily: 'Monda',
     color: textColor,
-    fontSize: 35,
+    fontSize: textSize,
     fontWeight: FontWeight.w500,
     letterSpacing: 3.0,
   );

@@ -1,12 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:leadx/pages/Home_page.dart';
 import 'package:leadx/pages/Login_page.dart';
 import 'package:leadx/pages/Personal_Details.dart';
-import 'package:leadx/pages/category_page.dart';
-import 'package:leadx/pages/income_details.dart';
-import 'package:leadx/pages/result_page.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PersonalDetails(),
+      home: LoginPage(),
     );
   }
 }

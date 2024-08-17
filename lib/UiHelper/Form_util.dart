@@ -1,18 +1,22 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pinput/pinput.dart';
 
 class textField extends StatefulWidget{
 
   TextEditingController Controller = TextEditingController();
   final String labelName;
   final TextInputType keyboardType;
+  final double? width;
 
   textField({
     super.key,
     required this.Controller,
     required this.labelName,
-    this.keyboardType = TextInputType.text
+    this.keyboardType = TextInputType.text,
+    this.width
   });
 
   @override
@@ -39,7 +43,7 @@ class _textFieldState extends State<textField> {
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: screenwidth*0.9,
+      width: widget.width ?? screenwidth * 0.9,
       child: TextFormField(
         focusNode: myFocusNode,
         controller: widget.Controller,
@@ -148,4 +152,76 @@ class switchTile<T> extends StatelessWidget{
           ),
     );
 }
+}
+
+class otpTitle extends StatelessWidget{
+
+  final void Function(String) onCompleted;
+
+  otpTitle({required this.onCompleted});
+
+  @override
+  Widget build(BuildContext context) {
+
+    double screenwidth = MediaQuery.of(context).size.width;
+
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: const TextStyle(fontSize: 20, color: Color(0xff33404F), fontWeight: FontWeight.w600),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      borderRadius: BorderRadius.circular(8),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2), // Shadow color
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: const Offset(0, 2), // Shadow position
+        ),
+      ],
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        color: const Color.fromRGBO(234, 239, 243, 1),
+      ),
+    );
+
+    return SizedBox(
+      width: screenwidth * 0.8,
+      child: Pinput(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        defaultPinTheme: defaultPinTheme,
+        focusedPinTheme: focusedPinTheme,
+        submittedPinTheme: submittedPinTheme,
+        cursor: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 2,
+                width: 25,
+                color: const Color(0xff00DDA3),
+              ),
+            ),
+          ],
+        ),
+        length: 6,
+        validator: (s) {
+          return s!.length == 6 ? null : 'Pin is incorrect';
+        },
+        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+        showCursor: true,
+        onCompleted: onCompleted,
+      ),
+    );
+  }
 }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:leadx/models/data_model.dart';
 import 'package:leadx/models/personal_details_model.dart';
 import 'package:leadx/pages/Home_page.dart';
-import 'package:leadx/pages/Personal_Details.dart';
-import 'package:leadx/pages/result_page.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 import 'package:leadx/UiHelper/Form_util.dart';
 import 'package:leadx/utils/text_controllers.dart';
@@ -18,7 +16,6 @@ class IncomeDetails extends StatefulWidget {
 }
 
 class _IncomeDetailsState extends State<IncomeDetails> {
-  String? expenses;
 
   @override
   Widget build(BuildContext context) {
@@ -86,13 +83,7 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                       SizedBox(height:screenheight * 0.06 ,),
                       textField(Controller: TextControllers.income, labelName: 'Income', keyboardType: TextInputType.number,),
                       SizedBox(height:screenheight * 0.03 ,),
-                      DropDown(labelName: 'Expenses', value: expenses,
-                          items: const ['High', 'Mid', 'Low'],
-                          onchanged: (value){
-                            setState(() {
-                              expenses = value;
-                            });
-                          }),
+                      textField(Controller: TextControllers.expenses, labelName: 'Expenses',keyboardType: TextInputType.number,),
                       SizedBox(height: screenheight * 0.03,),
                       textField(Controller: TextControllers.creditScore, labelName: 'Credit Score', keyboardType: TextInputType.number,),
                       SizedBox(height: screenheight * 0.02,),
@@ -110,7 +101,7 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                                   gender: widget.personalDetails.gender,
                                   maritalStatus: widget.personalDetails.maritalStatus,
                                   income: int.parse(TextControllers.income.text),
-                                  expenses: expenses!,
+                                  expenses: int.parse(TextControllers.expenses.text),
                                   creditScore: int.parse(TextControllers.creditScore.text),
                                   child: TextControllers.child,
                                   home: TextControllers.home,
