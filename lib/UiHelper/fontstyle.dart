@@ -1,20 +1,15 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 
 TextStyle heading2({
   Color textColor = Colors.white,
   double textSize = 45
 }){
   return TextStyle(
-    fontFamily: 'Monda',
-    fontSize: textSize,
-    color: textColor,
-    letterSpacing: 3.3,
-    fontWeight: FontWeight.w700
+      fontFamily: 'Monda',
+      fontSize: textSize,
+      color: textColor,
+      letterSpacing: 3.3,
+      fontWeight: FontWeight.w700
   );
 }
 
@@ -49,10 +44,10 @@ TextStyle subHeading({
   FontWeight textWeight = FontWeight.w600
 }){
   return TextStyle(
-    fontFamily: 'Inter',
-    color: textColor,
-    fontSize: textSize,
-    fontWeight: textWeight,
-    letterSpacing: 1.5
+      fontFamily: 'Inter',
+      color: textColor,
+      fontSize: textSize,
+      fontWeight: textWeight,
+      letterSpacing: 1.5
   );
 }

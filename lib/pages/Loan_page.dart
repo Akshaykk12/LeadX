@@ -1,50 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:leadx/UiHelper/List_tile.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 
-
-class LoanPage extends StatefulWidget{
-  const LoanPage({super.key});
+class LoanPage extends StatefulWidget {
+  const LoanPage({super.key, required this.loansList});
+  final List<Map<String, String>> loansList;
 
   @override
   State<LoanPage> createState() => _LoanPageState();
 }
 
-class _LoanPageState extends State<LoanPage>{
-
+class _LoanPageState extends State<LoanPage> {
   @override
   Widget build(BuildContext context) {
-
     double screenheight = MediaQuery.of(context).size.height;
-    double screenwidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('LeadX',style:heading1(textColor: const Color(0xff33404F)),),
+        automaticallyImplyLeading: false,
+        title: Text(
+          'LeadX',
+          style: heading1(textColor: const Color(0xff33404F)),
+        ),
         elevation: 0,
         backgroundColor: const Color(0xffFFFFFF),
       ),
       body: Container(
-        height: screenheight,
-        width: screenwidth,
-        decoration: const BoxDecoration(color: Colors.white,),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-
-                  TextSpan(
-                    text: 'Loans',style: subHeading(textColor: Colors.black)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(height: screenheight * 0.05,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Text('Loans', style: subHeading(textColor: const Color(0xff33404F),textSize: 20),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9.0, left: 5.0),
+                  child: Container(
+                    height: 10,
+                      width: 10,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xff00E7B1)
+                      ),
                   ),
-
-                  const TextSpan(
-                    text: '.', style: TextStyle(fontSize: 55, color: Color(0xff00E7B1),fontWeight: FontWeight.bold)
-                  )
-
-                ]
-              ),
-            )
+                )
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.loansList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Column(
+                        children: [
+                          listTile(
+                            title: widget.loansList[index]['title']!,
+                            subtitle: widget.loansList[index]['subtitle']!,
+                            imageURl: widget.loansList[index]['image']!,
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
           ],
         ),
       ),

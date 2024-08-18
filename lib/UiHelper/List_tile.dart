@@ -43,19 +43,19 @@ class listTile extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: screenheight * 0.005,
                     ),
                     Text(
                       subtitle,
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Container(

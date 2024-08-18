@@ -6,9 +6,10 @@ import 'package:leadx/models/data_model.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({super.key, this.model});
+  const ResultPage({super.key, this.model, required this.onOutput});
 
   final DataModel? model;
+  final Function(List<Map<String, String>>) onOutput;
 
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -17,143 +18,167 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   final List<Map<String, String>> posters = [
     {
-      "image": "Assets/Images/Posters/Home_Loan.png",
+      "type": "Loan",
+      "image": "Assets/Images/Posters/Loans/Home_Loan.png",
       "title": "Home Loan",
       "subtitle":
-      "Find the best home loan solutions with competitive rates and flexible terms."
+          "Find the best home loan solutions with competitive rates and flexible terms."
     },
     {
-      "image": "Assets/Images/Posters/Vehicle_Loan.png",
+      "type": "Loan",
+      "image": "Assets/Images/Posters/Loans/Vehicle_Loan.png",
       "title": "Vehicle Loan",
       "subtitle": "Drive your dreams with our affordable vehicle loan options."
     },
     {
-      "image": "Assets/Images/Posters/Personal_Loan.png",
+      "type": "Loan",
+      "image": "Assets/Images/Posters/Loans/Personal_Loan.png",
       "title": "Personal Loan",
       "subtitle":
-      "Get a personal loan for any need with easy approval and quick disbursal."
+          "Get a personal loan for any need with easy approval and quick disbursal."
     },
     {
-      "image": "Assets/Images/Posters/Education_Loan.png",
+      "type": "Loan",
+      "image": "Assets/Images/Posters/Loans/Education_Loan.png",
       "title": "Education Loan",
       "subtitle":
-      "Explore the possibilities with our hassle-free educational loan solutions."
+          "Explore the possibilities with our hassle-free educational loan solutions."
     },
     {
-      "image": "Assets/Images/Posters/Equity_Funds.png",
+      "type": "Funds",
+      "image": "Assets/Images/Posters/Mutual_funds/Equity_Funds.png",
       "title": "Equity Funds",
       "subtitle":
-      "Invest in equity funds for high returns and long-term growth."
+          "Invest in equity funds for high returns and long-term growth."
     },
     {
-      "image": "Assets/Images/Posters/Debt_Funds.png",
+      "type": "Funds",
+      "image": "Assets/Images/Posters/Mutual_funds/Debt_Funds.png",
       "title": "Debt Funds",
       "subtitle":
-      "Secure your investment with our stable and low-risk debt fund options."
+          "Secure your investment with our stable and low-risk debt fund options."
     },
     {
-      "image": "Assets/Images/Posters/Hybrid_Funds.png",
+      "type": "Funds",
+      "image": "Assets/Images/Posters/Mutual_funds/Hybrid_Funds.png",
       "title": "Hybrid Funds",
       "subtitle":
-      "Enjoy the best of both worlds with our hybrid fund investments."
+          "Enjoy the best of both worlds with our hybrid fund investments."
     },
     {
-      "image": "Assets/Images/Posters/Index_Funds.png",
+      "type": "Funds",
+      "image": "Assets/Images/Posters/Mutual_funds/Index_Funds.png",
       "title": "Index Funds",
       "subtitle":
-      "Diversify your portfolio with our low-cost index fund options."
+          "Diversify your portfolio with our low-cost index fund options."
     },
     {
-      "image": "Assets/Images/Posters/Short-term_FD.png",
+      "type": "Deposit",
+      "image": "Assets/Images/Posters/Fixed_Deposits/Short-term_FD.png",
       "title": "Short-term FD",
       "subtitle": "Grow your savings with our short-term fixed deposit options."
     },
     {
-      "image": "Assets/Images/Posters/Long-term_FD.png",
+      "type": "Deposit",
+      "image": "Assets/Images/Posters/Fixed_Deposits/Long-term_FD.png",
       "title": "Long-term FD",
       "subtitle":
-      "Plan for the future with our attractive long-term fixed deposit rates."
+          "Plan for the future with our attractive long-term fixed deposit rates."
     },
     {
-      "image": "Assets/Images/Posters/Tax-savings_FD.png",
+      "type": "Deposit",
+      "image": "Assets/Images/Posters/Fixed_Deposits/Tax-savings_FD.png",
       "title": "Tax-savings FD",
       "subtitle":
-      "Save on taxes while earning interest with our tax-saving fixed deposits."
+          "Save on taxes while earning interest with our tax-saving fixed deposits."
     },
     {
-      "image": "Assets/Images/Posters/Senior_Citizen_FD.png",
+      "type": "Deposit",
+      "image": "Assets/Images/Posters/Fixed_Deposits/Senior_Citizen_FD.png",
       "title": "Senior Citizen FD",
       "subtitle":
-      "Secure higher returns with our fixed deposits for senior citizens."
+          "Secure higher returns with our fixed deposits for senior citizens."
     },
     {
-      "image": "Assets/Images/Posters/Health_Insurance.png",
+      "type": "Insurance",
+      "image": "Assets/Images/Posters/Insurance/Health_Insurance.png",
       "title": "Health Insurance",
       "subtitle":
-      "Get comprehensive health insurance coverage with easy claim processes."
+          "Get comprehensive health insurance coverage with easy claim processes."
     },
     {
-      "image": "Assets/Images/Posters/Health_Insurance.png",
+      "type": "Insurance",
+      "image": "Assets/Images/Posters/Insurance/Life_Insurance.png",
       "title": "Life Insurance",
       "subtitle":
-      "Ensure financial security for your loved ones with our life insurance plans."
+          "Ensure financial security for your loved ones with our life insurance plans."
     },
     {
-      "image": "Assets/Images/Posters/Car_Insurance.png",
+      "type": "Insurance",
+      "image": "Assets/Images/Posters/Insurance/Car_Insurance.png",
       "title": "Car Insurance",
       "subtitle":
-      "Protect your vehicle with our comprehensive car insurance policies."
+          "Protect your vehicle with our comprehensive car insurance policies."
     },
     {
-      "image": "Assets/Images/Posters/Home_Insurance.png",
+      "type": "Insurance",
+      "image": "Assets/Images/Posters/Insurance/Home_Insurance.png",
       "title": "Home Insurance",
       "subtitle":
-      "Safeguard your home with our extensive home insurance coverage."
+          "Safeguard your home with our extensive home insurance coverage."
     },
     {
-      "image": "Assets/Images/Posters/Stocks Investments.png",
+      "type": "Investments",
+      "image": "Assets/Images/Posters/Investments/Stocks Investments.png",
       "title": "Stocks Investments",
       "subtitle":
-      "Grow your wealth with our expert stock investment strategies."
+          "Grow your wealth with our expert stock investment strategies."
     },
     {
-      "image": "Assets/Images/Posters/Bonds.png",
+      "type": "Investments",
+      "image": "Assets/Images/Posters/Investments/Bonds.png",
       "title": "Bonds",
       "subtitle": "Invest in bonds for stable returns and lower risk."
     },
     {
-      "image": "Assets/Images/Posters/Real-Estates.png",
+      "type": "Investments",
+      "image": "Assets/Images/Posters/Investments/Real-Estates.png",
       "title": "Real-Estates",
       "subtitle": "Invest in real estate with our guidance and support."
     },
     {
-      "image": "Assets/Images/Posters/Commodities.png",
+      "type": "Investments",
+      "image": "Assets/Images/Posters/Investments/Commodities.png",
       "title": "Commodities",
       "subtitle":
-      "Diversify your investment portfolio with commodities trading."
+          "Diversify your investment portfolio with commodities trading."
     },
     {
-      "image": "Assets/Images/Posters/Retirement_Policy.png",
+      "type": "Policy",
+      "image": "Assets/Images/Posters/Policies/Retirement_Policy.png",
       "title": "Retirement Policy",
       "subtitle": "Plan for a secure future with our retirement policies."
     },
     {
-      "image": "Assets/Images/Posters/Child_Policy.png",
+      "type": "Policy",
+      "image": "Assets/Images/Posters/Policies/Child_Policy.png",
       "title": "Child Policy",
       "subtitle":
-      "Ensure a bright future for your child with our dedicated policies."
+          "Ensure a bright future for your child with our dedicated policies."
     },
     {
-      "image": "Assets/Images/Posters/Term_Policy.png",
+      "type": "Policy",
+      "image": "Assets/Images/Posters/Policies/Term_Policy.png",
       "title": "Term Policy",
       "subtitle":
-      "Get maximum protection at minimal cost with our term policies."
+          "Get maximum protection at minimal cost with our term policies."
     },
     {
-      "image": "Assets/Images/Posters/Endowment_Policy.png",
+      "type": "Policy",
+      "image": "Assets/Images/Posters/Policies/Endowment_Policy.png",
       "title": "Endowment Policy",
       "subtitle":
-      "Combine insurance with savings through our endowment policies."
+          "Combine insurance with savings through our endowment policies."
     }
   ];
 
@@ -250,7 +275,7 @@ class _ResultPageState extends State<ResultPage> {
 
   runModel(List<dynamic> data) async {
     final interpreter =
-    await tfl.Interpreter.fromAsset('Assets/model/model2.tflite');
+        await tfl.Interpreter.fromAsset('Assets/model/model2.tflite');
     print(data);
     final input = data;
     var output = List.filled(24, 0).reshape([1, 24]);
@@ -310,13 +335,21 @@ class _ResultPageState extends State<ResultPage> {
       print('${entry.key}: ${entry.value}');
     }
 
-    var top5Keys = sortedEntries.take(5).map((e) => e.key).toSet();
+    var top5Keys = sortedEntries.take(10).map((e) => e.key).toSet();
 
     // Filter the models to include only those present in top 5 keys
     setState(() {
       postersToDisplay =
           posters.where((model) => top5Keys.contains(model['title'])).toList();
     });
+    // Filter out the posters that are not in postersToDisplay.
+    List<Map<String, String>> remainingPosters =
+        posters.where((model) => !top5Keys.contains(model['title'])).toList();
+
+    // Combine both lists to maintain the order.
+    List<Map<String, String>> postersToPass =
+        postersToDisplay + remainingPosters;
+    widget.onOutput(postersToPass);
   }
 
   @override
@@ -335,52 +368,55 @@ class _ResultPageState extends State<ResultPage> {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              /*  SizedBox(
-                height: screenheight * 0.05,
-              ), */
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Text('Top Recommendations',
-                    style:
-                    subHeading(textColor: Color(0xff33404F), textSize: 18)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0, left: 5),
-                child: Container(
-                  height: 10,
-                  width: 10,
-                  decoration: const BoxDecoration(
-                      color: Color(0xff00E7B1), shape: BoxShape.circle),
+      body: Container(
+        decoration: const BoxDecoration(color: Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end
+              ,
+              children: [
+                  SizedBox(
+                  height: screenheight * 0.05,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Text('Top Recommendations',
+                      style:
+                          subHeading(textColor: const Color(0xff33404F), textSize: 20)),
                 ),
-              )
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: postersToDisplay.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Column(
-                      children: [
-                        listTile(
-                          title: postersToDisplay[index]['title']!,
-                          subtitle: postersToDisplay[index]['subtitle']!,
-                          imageURl: postersToDisplay[index]['image']!,
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-          ),
-        ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9.0, left: 5),
+                  child: Container(
+                    height: 10,
+                    width: 10,
+                    decoration: const BoxDecoration(
+                        color: Color(0xff00E7B1), shape: BoxShape.circle),
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: postersToDisplay.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Column(
+                        children: [
+                          listTile(
+                            title: postersToDisplay[index]['title']!,
+                            subtitle: postersToDisplay[index]['subtitle']!,
+                            imageURl: postersToDisplay[index]['image']!,
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

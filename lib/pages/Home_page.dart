@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _SelectedIndex = 0;
+  List<Map<String, String>> bankingServicesList = [];
 
   void navigateBottomBar(int index) {
     setState(() {
@@ -34,11 +35,41 @@ class _HomePageState extends State<HomePage> {
   getPage(int index) {
     switch (index) {
       case 0:
-        return ResultPage(model: widget.model);
+        return ResultPage(
+          model: widget.model,
+          onOutput: (p0) {
+            setState(() {
+              bankingServicesList = p0;
+              print(bankingServicesList);
+            });
+          },
+        );
       case 1:
-        return CategoryPage();
+        return CategoryPage(
+          loansList:
+              bankingServicesList.where((e) => e['type'] == "Loan").toList(),
+          fdsList:
+              bankingServicesList.where((e) => e['type'] == "Deposit").toList(),
+          mfsList:
+              bankingServicesList.where((e) => e['type'] == "Funds").toList(),
+          insurancesList: bankingServicesList
+              .where((e) => e['type'] == "Insurance")
+              .toList(),
+          investmentsList: bankingServicesList
+              .where((e) => e['type'] == "Investments")
+              .toList(),
+          policysList:
+              bankingServicesList.where((e) => e['type'] == "Policy").toList(),
+        );
       default:
-        return ResultPage(model: widget.model);
+        return ResultPage(
+          model: widget.model,
+          onOutput: (p0) {
+            setState(() {
+              bankingServicesList = p0;
+            });
+          },
+        );
     }
   }
 }

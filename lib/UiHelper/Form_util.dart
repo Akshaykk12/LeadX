@@ -1,22 +1,20 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
-class textField extends StatefulWidget{
-
+class textField extends StatefulWidget {
   TextEditingController Controller = TextEditingController();
   final String labelName;
-  final TextInputType keyboardType;
   final double? width;
+  final TextInputType keyboardType;
+  final String? Function(String?)? validator;
 
   textField({
     super.key,
+    this.width,
     required this.Controller,
     required this.labelName,
     this.keyboardType = TextInputType.text,
-    this.width
+    this.validator,
   });
 
   @override
@@ -24,17 +22,16 @@ class textField extends StatefulWidget{
 }
 
 class _textFieldState extends State<textField> {
-
   late FocusNode myFocusNode;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     myFocusNode = FocusNode();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     myFocusNode.dispose();
     super.dispose();
   }
@@ -42,6 +39,7 @@ class _textFieldState extends State<textField> {
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
+    // double screenheight = MediaQuery.of(context).size.height;
     return SizedBox(
       width: widget.width ?? screenwidth * 0.9,
       child: TextFormField(
@@ -50,91 +48,85 @@ class _textFieldState extends State<textField> {
         keyboardType: widget.keyboardType,
         cursorColor: const Color(0xff2CB696),
         decoration: InputDecoration(
-            label: Text(widget.labelName),
-            labelStyle: const TextStyle(color: Color(0xff33404F)),
-            floatingLabelStyle: const TextStyle(color: Color(0xff2CB696)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                    color: Color(0xff2CB696),
-                    width: 1.5
-                )
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                  color: Color(0xff33404F),
-                )
-            )
+          label: Text(widget.labelName),
+          labelStyle: const TextStyle(color: Color(0xff33404F)),
+          floatingLabelStyle: const TextStyle(color: Color(0xff2CB696)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide:
+                  const BorderSide(color: Color(0xff2CB696), width: 1.5)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(
+                color: Color(0xff33404F),
+              )),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(
+                  color: Color.fromARGB(255, 167, 22, 22), width: 1.5)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(
+                  color: Color.fromARGB(255, 167, 22, 22), width: 1.5)),
+          errorStyle: const TextStyle(color: Color.fromARGB(255, 167, 22, 22)),
         ),
+        validator: widget.validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }
 }
 
-class DropDown<T> extends StatelessWidget{
+class DropDown<T> extends StatelessWidget {
   final String labelName;
-  final  T? value;
+  final T? value;
   final List<T> items;
   final ValueChanged<T?> onchanged;
 
-  const DropDown({
-    super.key,
-    required this.labelName,
-    required this.value,
-    required this.items,
-    required this.onchanged
-});
+  const DropDown(
+      {super.key,
+      required this.labelName,
+      required this.value,
+      required this.items,
+      required this.onchanged});
 
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    return  SizedBox(
+    return SizedBox(
       width: screenwidth * 0.9,
       child: DropdownButtonFormField(
-        decoration: InputDecoration(
-            label: Text(labelName),
-            labelStyle: const TextStyle(color: Color(0xff33404F)),
-            floatingLabelStyle: const TextStyle(color: Color(0xff2CB696)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                    color: Color(0xff2CB696),
-                    width: 1.25
-                )
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                    color: Color(0xff33404F)
-                )
-            )
-        ),
-        value: value,
-        items: items.map(
-                (item)=>DropdownMenuItem(
-              value: item,
-              child: Text(item.toString()),
-            )
-        ).toList(),
-        dropdownColor: Colors.white,
-        onChanged: onchanged
-      ),
+          decoration: InputDecoration(
+              label: Text(labelName),
+              labelStyle: const TextStyle(color: Color(0xff33404F)),
+              floatingLabelStyle: const TextStyle(color: Color(0xff2CB696)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide:
+                      const BorderSide(color: Color(0xff2CB696), width: 1.25)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: const BorderSide(color: Color(0xff33404F)))),
+          value: value,
+          items: items
+              .map((item) => DropdownMenuItem(
+                    value: item,
+                    child: Text(item.toString()),
+                  ))
+              .toList(),
+          dropdownColor: Colors.white,
+          onChanged: onchanged),
     );
   }
 }
 
-
-class switchTile<T> extends StatelessWidget{
+class switchTile<T> extends StatelessWidget {
   final bool value;
   final String title;
   final ValueChanged<bool> onchanged;
 
-  const switchTile({
-    required this.value,
-    required this.title,
-    required this.onchanged
-});
+  const switchTile(
+      {required this.value, required this.title, required this.onchanged});
 
   @override
   Widget build(BuildContext context) {
@@ -148,23 +140,18 @@ class switchTile<T> extends StatelessWidget{
           inactiveTrackColor: Colors.grey[200],
           inactiveThumbColor: Colors.grey[400],
           value: value,
-          onChanged: onchanged
-          ),
+          onChanged: onchanged),
     );
-}
+  }
 }
 
 class otpTitle extends StatelessWidget{
-
   final void Function(String) onCompleted;
-
   otpTitle({required this.onCompleted});
 
   @override
   Widget build(BuildContext context) {
-
     double screenwidth = MediaQuery.of(context).size.width;
-
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
