@@ -3,8 +3,7 @@ import 'package:leadx/UiHelper/fontstyle.dart';
 import 'package:leadx/UiHelper/List_tile.dart';
 import 'package:leadx/models/data_model.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-
+import 'package:emailjs/emailjs.dart' as emailjs;
 
 class ResultPage extends StatefulWidget {
   const ResultPage({super.key, this.model, required this.onOutput});
@@ -285,7 +284,7 @@ class _ResultPageState extends State<ResultPage> {
     print(result);
     Map<String, double> convertedResult = parseRecommendations(result);
     getTopFive(convertedResult);
-    setState(() {});
+    // setState(() {});
   }
 
   List<String> target = [
@@ -329,20 +328,27 @@ class _ResultPageState extends State<ResultPage> {
       ..sort((a, b) => b.value.compareTo(a.value));
 
     // Extracting the top 5 entries
-    var top5 = sortedEntries.take(5).toList();
+    var top5 = sortedEntries.take(7).toList();
 
     // Printing the top 5 topics
     for (var entry in top5) {
       print('${entry.key}: ${entry.value}');
     }
 
-    var top5Keys = sortedEntries.take(10).map((e) => e.key).toSet();
+    var top5Keys = sortedEntries.take(7).map((e) => e.key).toSet();
 
     // Filter the models to include only those present in top 5 keys
-    setState(() {
+    for (var item in top5) {
+      for (var poster in posters) {
+        if (poster['title'] == item.key) {
+          postersToDisplay.add(poster);
+        }
+      }
+    }
+    /* setState(() {
       postersToDisplay =
           posters.where((model) => top5Keys.contains(model['title'])).toList();
-    });
+    }); */
     // Filter out the posters that are not in postersToDisplay.
     List<Map<String, String>> remainingPosters =
         posters.where((model) => !top5Keys.contains(model['title'])).toList();
@@ -351,34 +357,44 @@ class _ResultPageState extends State<ResultPage> {
     List<Map<String, String>> postersToPass =
         postersToDisplay + remainingPosters;
     widget.onOutput(postersToPass);
+    _sendEmail();
   }
 
-  Future<void> sendEmail() async {
-    final Email email = Email(
-      body: generateEmailBody(),
-      subject: 'Your LeadX Recommendations',
-      recipients: [widget.model!.email],
-      isHTML: false,
-    );
-
+  void _sendEmail() async {
     try {
-      await FlutterEmailSender.send(email);
+      await emailjs.send(
+        'service_gikc6zm',
+        'template_x3vlq91',
+        {
+          'to_email': widget.model!.email,
+          'user_name': widget.model!.name,
+          'recommend1': postersToDisplay[0]['title']!,
+          'subtitle1': postersToDisplay[0]['subtitle']!,
+          'recommend2': postersToDisplay[1]['title']!,
+          'subtitle2': postersToDisplay[1]['subtitle']!,
+          'recommend3': postersToDisplay[2]['title']!,
+          'subtitle3': postersToDisplay[2]['subtitle']!,
+          'recommend4': postersToDisplay[3]['title']!,
+          'subtitle4': postersToDisplay[3]['subtitle']!,
+          'recommend5': postersToDisplay[4]['title']!,
+          'subtitle5': postersToDisplay[4]['subtitle']!
+        },
+        const emailjs.Options(
+            publicKey: 'eiI9V5kIlIH63prOw',
+            privateKey: 'xUsnEuWGicZb6J3XBjbdw',
+            limitRate: const emailjs.LimitRate(
+              id: 'app',
+              throttle: 10000,
+            )),
+      );
+      print('SUCCESS!');
     } catch (error) {
-      print("Failed to send email: $error");
+      if (error is emailjs.EmailJSResponseStatus) {
+        print('ERROR... $error');
+      }
+      print(error.toString());
     }
   }
-
-  String generateEmailBody() {
-    StringBuffer buffer = StringBuffer();
-    buffer.writeln("Hello ${widget.model!.name},");
-    buffer.writeln("\nHere are your top financial recommendations from LeadX:\n");
-    for (var poster in postersToDisplay) {
-      buffer.writeln("${poster['title']}: ${poster['subtitle']}\n");
-    }
-    buffer.writeln("\nThank you for choosing LeadX!");
-    return buffer.toString();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -402,16 +418,16 @@ class _ResultPageState extends State<ResultPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end
-              ,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                  SizedBox(
-                  height: screenheight * 0.05,),
+                SizedBox(
+                  height: screenheight * 0.05,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0),
                   child: Text('Top Recommendations',
-                      style:
-                          subHeading(textColor: const Color(0xff33404F), textSize: 20)),
+                      style: subHeading(
+                          textColor: const Color(0xff33404F), textSize: 20)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 9.0, left: 5),
