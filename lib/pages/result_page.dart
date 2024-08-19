@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 import 'package:leadx/UiHelper/List_tile.dart';
 import 'package:leadx/models/data_model.dart';
-
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+
 
 class ResultPage extends StatefulWidget {
   const ResultPage({super.key, this.model, required this.onOutput});
@@ -351,6 +352,33 @@ class _ResultPageState extends State<ResultPage> {
         postersToDisplay + remainingPosters;
     widget.onOutput(postersToPass);
   }
+
+  Future<void> sendEmail() async {
+    final Email email = Email(
+      body: generateEmailBody(),
+      subject: 'Your LeadX Recommendations',
+      recipients: [widget.model!.email],
+      isHTML: false,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+    } catch (error) {
+      print("Failed to send email: $error");
+    }
+  }
+
+  String generateEmailBody() {
+    StringBuffer buffer = StringBuffer();
+    buffer.writeln("Hello ${widget.model!.name},");
+    buffer.writeln("\nHere are your top financial recommendations from LeadX:\n");
+    for (var poster in postersToDisplay) {
+      buffer.writeln("${poster['title']}: ${poster['subtitle']}\n");
+    }
+    buffer.writeln("\nThank you for choosing LeadX!");
+    return buffer.toString();
+  }
+
 
   @override
   Widget build(BuildContext context) {
