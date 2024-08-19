@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
 class textField extends StatefulWidget {
@@ -7,6 +8,8 @@ class textField extends StatefulWidget {
   final double? width;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+
 
   textField({
     super.key,
@@ -15,6 +18,7 @@ class textField extends StatefulWidget {
     required this.labelName,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.inputFormatters,
   });
 
   @override
@@ -71,6 +75,7 @@ class _textFieldState extends State<textField> {
           errorStyle: const TextStyle(color: Color.fromARGB(255, 167, 22, 22)),
         ),
         validator: widget.validator,
+        inputFormatters: widget.inputFormatters,
         autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
@@ -82,13 +87,15 @@ class DropDown<T> extends StatelessWidget {
   final T? value;
   final List<T> items;
   final ValueChanged<T?> onchanged;
+  final FormFieldValidator<T>? validator;
 
   const DropDown(
       {super.key,
       required this.labelName,
       required this.value,
       required this.items,
-      required this.onchanged});
+      required this.onchanged,
+      required this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +113,17 @@ class DropDown<T> extends StatelessWidget {
                       const BorderSide(color: Color(0xff2CB696), width: 1.25)),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: const BorderSide(color: Color(0xff33404F)))),
+                  borderSide: const BorderSide(color: Color(0xff33404F))),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 167, 22, 22), width: 1.5)),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 167, 22, 22), width: 1.5)),
+              errorStyle: const TextStyle(color: Color.fromARGB(255, 167, 22, 22)),
+          ),
           value: value,
           items: items
               .map((item) => DropdownMenuItem(
@@ -115,7 +132,8 @@ class DropDown<T> extends StatelessWidget {
                   ))
               .toList(),
           dropdownColor: Colors.white,
-          onChanged: onchanged),
+          onChanged: onchanged,
+          validator: validator,),
     );
   }
 }

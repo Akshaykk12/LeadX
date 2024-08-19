@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:leadx/UiHelper/Form_util.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 import 'package:leadx/pages/Personal_Details.dart';
@@ -94,7 +95,31 @@ class _LoginPageState extends State<LoginPage>{
                           textField(Controller: pnumber,
                             labelName: 'Phone Number',
                             width: screenwidth * 0.8,
-                          keyboardType: TextInputType.number,),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly, // Allow only digits
+                            LengthLimitingTextInputFormatter(10), // Limit to 10 digits
+                            TextInputFormatter.withFunction((oldValue, newValue) {
+                              // Remove all non-digit characters
+                              final digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+                              // Format phone number
+                              String formattedText = '';
+                              if (digitsOnly.length > 0) {
+                                // Add space after 5 digits
+                                formattedText += digitsOnly.substring(0, digitsOnly.length > 5 ? 5 : digitsOnly.length);
+                                if (digitsOnly.length > 5) {
+                                  formattedText += ' ' + digitsOnly.substring(5);
+                                }
+                              }
+
+                              // Maintain the cursor position
+                              return newValue.copyWith(
+                                text: formattedText,
+                                selection: TextSelection.collapsed(offset: formattedText.length),
+                              );
+                            }),
+                          ],),
                           if(otpFieldVisit) ...[
                             SizedBox(height: screenheight * 0.04,),
                             otpTitle(

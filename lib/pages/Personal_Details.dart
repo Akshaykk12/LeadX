@@ -96,10 +96,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                           textField(
                             Controller: TextControllers.name,
-                            labelName: 'Name',
+                            labelName: 'Full Name',
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your name';
+                                return 'Please Enter your Name';
                               }
                               // Check if the input contains any digits
                               if (RegExp(r'[0-9]').hasMatch(value)) {
@@ -115,6 +115,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                             Controller: TextControllers.age,
                             labelName: 'Age',
                             keyboardType: TextInputType.number,
+                            validator: (value){
+                              if (value == null || value.isEmpty){
+                                return 'Please Enter your Age';
+                              }
+                              int age = int.tryParse(value) ?? 0;
+                              if (age>100){
+                                return 'Age must not exceed 100';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: screenheight * 0.03,
@@ -123,6 +133,30 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                             Controller: TextControllers.aadhar,
                             labelName: 'Aadhaar No.',
                             keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Enter Your Aadhaar No.';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: screenheight * 0.03,
+                          ),
+                          textField(
+                            Controller: TextControllers.email,
+                            labelName: 'Email ID',
+                            validator: (value){
+                              if(value==null || value.isEmpty){
+                                return 'Please Enter Your Email ID';
+                              }
+                              String pattern = r'^[a-z0-9._]+@[a-z.]+\.[a-z]{2,}$';
+                              RegExp regexp = RegExp(pattern);
+                              if(!regexp.hasMatch(value)){
+                                return 'Please Enter A Valid Email ID';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: screenheight * 0.03,
@@ -140,7 +174,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 setState(() {
                                   occupation = value;
                                 });
-                              }),
+                              },
+                              validator: (value){
+                                if (value == null || value.isEmpty){
+                                  return 'Please Select Your Occupation';
+                                }
+                                return null;
+                              },),
                           SizedBox(
                             height: screenheight * 0.03,
                           ),
@@ -152,7 +192,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 setState(() {
                                   gender = value;
                                 });
-                              }),
+                              },
+                              validator: (value){
+                                if(value==null||value.isEmpty){
+                                  return 'Please Select Your Gender';
+                                }
+                                return null;
+                              },),
                           SizedBox(
                             height: screenheight * 0.03,
                           ),
@@ -164,7 +210,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 setState(() {
                                   maritalStatus = value;
                                 });
-                              }),
+                              },
+                              validator: (value){
+                                if(value==null||value.isEmpty){
+                                  return 'Please Select Your Marital Status';
+                                }
+                                return null;
+                              },),
                           SizedBox(
                             height: screenheight * 0.01,
                           ),
@@ -206,16 +258,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                     PersonalDetailsModel personalDetails =
                                         PersonalDetailsModel(
                                             name: TextControllers.name.text,
-                                            age: int.parse(
-                                                TextControllers.age.text),
-                                            aadhar: int.parse(
-                                                TextControllers.aadhar.text),
+                                            age: int.parse(TextControllers.age.text),
+                                            aadhar: int.parse(TextControllers.aadhar.text),
+                                            email: TextControllers.email.text,
                                             occupation: occupation!,
                                             gender: gender!,
                                             maritalStatus: maritalStatus!,
                                             child: TextControllers.child,
                                             home: TextControllers.home,
-                                            car: TextControllers.car);
+                                            car: TextControllers.car
+                                        );
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => IncomeDetails(
@@ -223,7 +275,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                                     personalDetails)));
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                             content: Text(
                                                 'Please correct the errors')));
                                   }

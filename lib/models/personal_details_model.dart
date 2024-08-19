@@ -2,6 +2,7 @@ class PersonalDetailsModel {
   String name;
   int age;
   int aadhar;
+  String email;
   String occupation;
   String gender;
   String maritalStatus;
@@ -14,6 +15,7 @@ class PersonalDetailsModel {
     required this.name,
     required this.age,
     required this.aadhar,
+    required this.email,
     required this.occupation,
     required this.gender,
     required this.maritalStatus,
@@ -28,6 +30,7 @@ class PersonalDetailsModel {
       name: map['name'] as String,
       age: map['age'] as int,
       aadhar: map['aadhar'] as int,
+      email: map['email'] as String,
       occupation: map['occupation'] as String,
       gender: map['gender'] as String,
       maritalStatus: map['maritalStatus'] as String,
@@ -43,6 +46,7 @@ class PersonalDetailsModel {
       'name': name,
       'age': age,
       'aadhar': aadhar,
+      'email': email,
       'occupation': occupation,
       'gender': gender,
       'maritalStatus': maritalStatus,
@@ -54,6 +58,6 @@ class PersonalDetailsModel {
 
   @override
   String toString() {
-    return 'PersonalDetails(name: $name, age: $age,aadhar: $aadhar, occupation: $occupation, gender: $gender, maritalStatus: $maritalStatus, child: $child, home: $home, car: $car)';
+    return 'PersonalDetails(name: $name, age: $age,aadhar: $aadhar, email: $email, occupation: $occupation, gender: $gender, maritalStatus: $maritalStatus, child: $child, home: $home, car: $car)';
   }
 }

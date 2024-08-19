@@ -1,6 +1,6 @@
 class IncomeDetailsModel {
   int income;
-  String expenses;
+  int expenses;
   int creditScore;
 
   // Constructor
@@ -14,7 +14,7 @@ class IncomeDetailsModel {
   factory IncomeDetailsModel.fromMap(Map<String, dynamic> map) {
     return IncomeDetailsModel(
       income: map['income'] as int,
-      expenses: map['expenses'] as String,
+      expenses: map['expenses'] as int,
       creditScore: map['creditScore'] as int,
     );
   }
