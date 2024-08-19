@@ -36,6 +36,8 @@ class BottomNavbar extends StatelessWidget{
             GButton(
               icon: Icons.category,
               text: 'Category',
+              iconActiveColor: Colors.white,
+              iconColor: Colors.grey,
             )
 
           ],

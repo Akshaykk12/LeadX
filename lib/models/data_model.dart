@@ -50,7 +50,7 @@ class DataModel {
   }
 
   // Method to convert the instance to a map
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> tojson() {
     return {
       'name': name,
       'age': age,

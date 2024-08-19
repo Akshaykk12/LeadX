@@ -5,6 +5,8 @@ import 'package:leadx/pages/Home_page.dart';
 import 'package:leadx/UiHelper/fontstyle.dart';
 import 'package:leadx/UiHelper/Form_util.dart';
 import 'package:leadx/utils/text_controllers.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class IncomeDetails extends StatefulWidget {
   const IncomeDetails({super.key, required this.personalDetails});
@@ -135,7 +137,7 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: GestureDetector(
-                              onTap: (){
+                              onTap: () async {
                                 if(_formKey.currentState!.validate()){
                                   DataModel model = DataModel(
                                       name: widget.personalDetails.name,
@@ -152,6 +154,35 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                                       home: TextControllers.home,
                                       car: TextControllers.car
                                   );
+
+                                  // URL of your PHP script
+                                  var url = 'https://jade-evangeline-36.tiiny.io/save_users_details.php';
+
+                                  // Print the data to be sent
+                                  print('Data being sent: ${json.encode(model.tojson())}');
+
+                                  try {
+                                    // Send POST request
+                                    var response = await http.post(
+                                      Uri.parse(url),
+                                      body: json.encode(model.tojson()),
+                                      headers: {"Content-Type": "application/json"},
+                                    );
+
+                                    print('Response status: ${response.statusCode}');
+                                    print('Response body: ${response.body}');
+
+                                    if (response.statusCode == 200) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) => HomePage(model: model,))
+                                      );
+                                    } else {
+                                      print('Failed to update data: ${response.statusCode}');
+                                    }
+                                  } catch (e) {
+                                    print('Error: $e');
+                                  }
+
                                   Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) => HomePage(model: model,))
                                   );
