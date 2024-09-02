@@ -1,3 +1,5 @@
+![Leadx Banner](Banner.png)
+
 # Leadx - Personalized Financial Recommendations
 
 ## Overview
